@@ -10,7 +10,7 @@ MAZE_HEIGHT equ 15
 section .data
 	wall db 0x23
 	floor db 0x22
-	filename db 'myfile.txt' , 0
+	filename db 'mazefile.txt' , 0
 
 section .bss
 	
@@ -44,20 +44,40 @@ _printMaze:
 
 _printWallFloor:
 	mov rax , fileData 
-	inc rax
-	mov cl , [rax]
-	cmp cl , '0'
-	je _floor
+	
+	_loopWallFloor:
+		mov cl , [rax]
+		inc rax
+		push rax
+		
+		cmp cl , '9'
+		je _end
 
-	_wall:
-		mov rax , wall
-		call _printChar
-		ret
+		cmp cl , '1'
+		je _wall
+		
+		cmp cl , '0'
+		je _floor
+		
+		call _printNewLine
+		pop rax	
+		jmp _loopWallFloor		
 
-	_floor:
-		mov rax , floor
-		call _printChar
-		ret
+		_wall:
+			mov rax , wall
+			call _printChar
+			pop rax
+			jmp _loopWallFloor
+
+		_floor:
+			mov rax , floor
+			call _printChar
+			pop rax
+			jmp _loopWallFloor
+
+		_end:
+			pop rax
+			ret
 
 _loopMazeWidth:
 	mov rcx , MAZE_WIDTH
