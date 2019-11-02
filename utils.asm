@@ -24,6 +24,8 @@ section .text
 ;global exit
 
 ;Before call this subroutine mov rax , stringToPrint
+;This subroutine counts the letters and set rbx to tne number
+;so when we call print we set rdx as the number of letters
 _printString:
 	push rax
 	mov rbx , 0
@@ -97,7 +99,7 @@ _readFile:
 	syscall
 	
 	mov rax , fileData
-	
+
 	ret	
 
 _exit:
