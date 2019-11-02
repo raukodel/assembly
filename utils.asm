@@ -13,7 +13,8 @@ section .data
 
 section .bss
 	input resb 16
-	fileData resb 10
+	fileData resb 300
+	fileSize resb 1
 
 section .text
 
@@ -94,11 +95,11 @@ _readFile:
 	mov rdx , 300
 	syscall
 
+	mov [fileSize] , rax
+
 	mov rax , SYS_CLOSE
 	pop rdi 
 	syscall
-	
-	mov rax , fileData
 
 	ret	
 

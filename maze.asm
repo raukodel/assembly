@@ -19,18 +19,18 @@ section .text
 	global _start
 
 _start:
-	call _printNewLine
-
 	mov rax , mazeFile
 	call _readFile
-
+	
 	call _printWallFloor
 	;call _printMaze
 	;call _loopMazeHeight	
 
 	mov rax , instructionFile
 	call _readFile
-	call _printString
+	mov rax , fileData
+	mov rbx , [fileSize]
+	call _print
 
 	call _checkInput
 
